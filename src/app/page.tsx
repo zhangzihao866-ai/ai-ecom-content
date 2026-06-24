@@ -38,28 +38,15 @@ export default function Home() {
     setError('')
     setResult(null)
 
-    try {
-      const SYSTEM = `You are an expert e-commerce copywriter. When given product info, generate complete product page copy as JSON: {"title":"...","subtitle":"...","description":"...","bulletPoints":[...],"metaDescription":"...","seoKeywords":[...],"tone":"..."}. Return ONLY valid JSON.`
-      const userMsg = `Product: ${product}${features ? '. Features: '+features : ''}${platform ? '. Platform: '+platform : ''}${tone ? '. Tone: '+tone : ''}`
-
-      const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      const res = await fetch('/api/generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer sk-ead4be1b25aa460381ecb6b77a705e94',
-        },
-        body: JSON.stringify({
-          model: 'deepseek-chat',
-          messages: [{role:'system',content:SYSTEM},{role:'user',content:userMsg}],
-          temperature: 0.8,
-          max_tokens: 2000,
-          response_format: { type: 'json_object' },
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product, features, platform, tone: tone || undefined }),
       })
 
       const data = await res.json()
-      if (!res.ok || data.error) throw new Error(data.error?.message || 'API error')
-      const parsed = JSON.parse(data.choices[0].message.content)
+      if (!res.ok || data.error) throw new Error(data.error || 'Failed')
+      const parsed = data.data
       setResult(parsed)
       setTimeout(() => resultRef.current?.scrollIntoView({ behavior: 'smooth' }), 100)
     } catch (e: any) {
