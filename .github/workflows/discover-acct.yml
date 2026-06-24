@@ -1,0 +1,13 @@
+name: Discover Cloudflare Account ID
+on:
+  workflow_dispatch:
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          ACC_ID=$(curl -s -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" https://api.cloudflare.com/client/v4/accounts | jq -r '.result[0].id')
+          echo "Found Account ID: $ACC_ID"
+          echo "$ACC_ID" | gh secret set CLOUDFLARE_ACCOUNT_ID -R zhangzihao866-ai/ai-ecom-content
+        env:
+          GH_TOKEN: ${{ github.token }}
