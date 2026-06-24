@@ -1,8 +1,9 @@
-# AI Ecom Content Generator MVP
+# AI Ecom Content Generator
 
-Generate high-converting, SEO-optimized product descriptions for Shopify, Etsy & Amazon.
+MVP for generating SEO-optimized product descriptions.
 
-## Tech Stack
-- Next.js 16
-- DeepSeek API
-- Tailwind CSS v4
+## Setup
+`ash
+npm install
+npm run dev
+`
