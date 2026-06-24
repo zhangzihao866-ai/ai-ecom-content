@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-accent: #7c5cfc;
+  --color-accent-light: #a78bfa;
+  --color-accent-dark: #5b3cc4;
+  --color-surface: #faf9f7;
+  --color-surface-dark: #1a1a1a;
+  --color-border: #e8e6e1;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  background: #faf9f7;
+  color: #1a1a1a;
+}
+
+/* 加载闪烁 */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e8e6e1 25%, #f0eee9 50%, #e8e6e1 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+/* 打字机光标 */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: "|";
+  animation: blink 0.8s infinite;
+  color: var(--color-accent);
+}
