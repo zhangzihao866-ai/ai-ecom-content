@@ -13,18 +13,18 @@ jobs:
       deployments: write
     steps:
       - uses: actions/checkout@v4
-
+      
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-
+      
       - run: npm ci
-
+      
       - name: Build
         run: npm run build
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-
+      
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
